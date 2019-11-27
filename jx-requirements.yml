@@ -1,29 +1,72 @@
 autoUpdate:
   enabled: false
   schedule: ""
+bootConfigURL: https://github.com/cloudbees/cloudbees-jenkins-x-boot-config.git
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
+  clusterName: pr-86-7-boot-gke
+  environmentGitOwner: cb-kubecd
   environmentGitPublic: true
-  project: ""
-  azure: {}
+  gitKind: github
+  gitName: github
+  gitPublic: true
+  gitServer: https://github.com
+  namespace: jx
+  project: jenkins-x-bdd3
   provider: gke
-  zone: ""
-gitops: true
+  registry: gcr.io
+  zone: europe-west1-c
 environments:
-  - key: dev
-  - key: staging
-  - key: production
+- ingress:
+    domain: 35.187.10.185.nip.io
+    externalDNS: false
+    namespaceSubDomain: -jx.
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: dev
+- gitKind: github
+  gitServer: https://github.com
+  ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: staging
+  owner: cb-kubecd
+  repository: environment-pr-86-7-boot-gke-staging
+- gitKind: github
+  gitServer: https://github.com
+  ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: production
+  owner: cb-kubecd
+  repository: environment-pr-86-7-boot-gke-production
+gitops: true
 ingress:
-  domain: ""
+  domain: 35.187.10.185.nip.io
   externalDNS: false
+  namespaceSubDomain: -jx.
   tls:
     email: ""
     enabled: false
     production: false
 kaniko: true
+repository: nexus
 secretStorage: vault
 storage:
+  backup:
+    enabled: false
+    url: ""
   logs:
     enabled: true
     url: ""
@@ -33,7 +76,10 @@ storage:
   repository:
     enabled: true
     url: ""
+vault:
+  disableURLDiscovery: true
+velero: {}
 versionStream:
-  ref: 2.0.1005+cjxd.5
+  ref: 908ceeb44921d3e232f3bec331952dfc05a9cca5
   url: https://github.com/cloudbees/cloudbees-jenkins-x-versions.git
 webhook: prow
